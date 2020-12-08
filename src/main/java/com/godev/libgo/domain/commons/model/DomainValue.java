@@ -1,4 +1,6 @@
 package com.godev.libgo.domain.commons.model;
 
-public interface DomainValue {
+import java.io.Serializable;
+
+public interface DomainValue extends Serializable {
 }
