@@ -1,14 +1,14 @@
 package com.godev.libgo.domain.user.model;
 
 import com.godev.libgo.domain.commons.model.Email;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -31,7 +31,11 @@ public class Reader implements User {
         identityConfirmed = false;
     }
 
-    public void identityDocument() {
+    public void confirmIdentity() {
         identityConfirmed = true;
+    }
+
+    public static Reader forCreation(String fullName, Email email, IdentityDocument identityDocument) {
+        return new Reader(UUID.randomUUID(), fullName, email, identityDocument, false);
     }
 }

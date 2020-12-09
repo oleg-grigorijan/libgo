@@ -1,6 +1,7 @@
 package com.godev.libgo.domain.commons.persistence;
 
 import com.godev.libgo.domain.commons.model.DomainEntity;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.PreparedStatement;
@@ -17,8 +18,8 @@ import static com.godev.libgo.domain.commons.persistence.PersistenceUtils.toByte
 @RequiredArgsConstructor
 public abstract class BaseJdbcRepository<E extends DomainEntity> implements Repository<E> {
 
-    private final JdbcConnectionPool pool;
-    private final String table;
+    @NonNull protected final JdbcConnectionPool pool;
+    @NonNull private final String table;
 
     protected abstract E map(ResultSet result) throws SQLException;
 
@@ -42,19 +43,19 @@ public abstract class BaseJdbcRepository<E extends DomainEntity> implements Repo
     }
 
     @Override
-    public Optional<E> findById(UUID id) {
+    public Optional<E> findById(@NonNull UUID id) {
         return pool.withConnectionGet(connection -> {
             String sql = "select * from " + table + " where id = ?";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setBytes(1, toBytes(id));
                 ResultSet result = stmt.executeQuery();
-                return result.next() ? Optional.empty() : Optional.of(map(result));
+                return result.next() ? Optional.of(map(result)) : Optional.empty();
             }
         });
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(@NonNull UUID id) {
         pool.withConnection(connection -> {
             String sql = "delete from " + table + " where id = ?";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {

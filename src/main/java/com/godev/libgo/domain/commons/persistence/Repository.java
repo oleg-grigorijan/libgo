@@ -1,6 +1,7 @@
 package com.godev.libgo.domain.commons.persistence;
 
 import com.godev.libgo.domain.commons.model.DomainEntity;
+import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,15 +11,15 @@ public interface Repository<E extends DomainEntity> {
 
     List<E> getAll();
 
-    Optional<E> findById(UUID id);
+    Optional<E> findById(@NonNull UUID id);
 
-    void create(E entity);
+    void create(@NonNull E entity);
 
-    void update(E entity);
+    void update(@NonNull E entity);
 
-    void delete(UUID id);
+    void delete(@NonNull UUID id);
 
-    default void delete(E entity) {
+    default void delete(@NonNull E entity) {
         delete(entity.getId());
     }
 }

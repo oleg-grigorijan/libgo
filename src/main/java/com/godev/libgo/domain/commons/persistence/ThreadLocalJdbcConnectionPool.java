@@ -1,5 +1,6 @@
 package com.godev.libgo.domain.commons.persistence;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ public class ThreadLocalJdbcConnectionPool implements JdbcConnectionPool, TxTemp
     private final BlockingQueue<Connection> connections;
     private final ThreadLocal<Connection> currentConnection;
 
-    public ThreadLocalJdbcConnectionPool(int size, DatabaseProperties props) {
+    public ThreadLocalJdbcConnectionPool(int size, @NonNull DatabaseProperties props) {
         currentConnection = new ThreadLocal<>();
         connections = new ArrayBlockingQueue<>(size);
 
