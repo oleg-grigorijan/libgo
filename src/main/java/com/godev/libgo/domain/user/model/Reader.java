@@ -20,6 +20,9 @@ public class Reader implements User {
     private IdentityDocument identityDocument;
     private boolean identityConfirmed;
 
+    public static Reader forCreation(String fullName, Email email, IdentityDocument identityDocument) {
+        return new Reader(UUID.randomUUID(), fullName, email, identityDocument, false);
+    }
 
     @Override
     public UserRole getRole() {
@@ -33,9 +36,5 @@ public class Reader implements User {
 
     public void confirmIdentity() {
         identityConfirmed = true;
-    }
-
-    public static Reader forCreation(String fullName, Email email, IdentityDocument identityDocument) {
-        return new Reader(UUID.randomUUID(), fullName, email, identityDocument, false);
     }
 }
