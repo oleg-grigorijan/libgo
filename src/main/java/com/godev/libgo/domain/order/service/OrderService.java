@@ -15,9 +15,9 @@ public interface OrderService {
 
     List<Order> getAllByReader(UUID readerId);
 
-    Order create(OrderCreateRequest request);
+    Order make(OrderCreateRequest request);
 
-    Order createForReader(OrderCreateRequest request, UUID readerId);
+    Order makeForReader(OrderCreateRequest request, UUID readerId);
 
     void markAccepted(UUID orderId);
 

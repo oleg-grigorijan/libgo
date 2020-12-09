@@ -2,15 +2,15 @@ package com.godev.libgo.domain.order.model;
 
 import com.godev.libgo.domain.commons.model.DomainEntity;
 import com.godev.libgo.domain.order.OrderException;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 @ToString
@@ -24,6 +24,19 @@ public class Order implements DomainEntity {
     private final LocalDate takenToDate;
     private final OrderType type;
     private OrderState state;
+
+    public static Order forCreation(UUID libItemId, UUID readerId, UUID initiatorId, LocalDate takenFromDate, LocalDate takenToDate, OrderType type) {
+        return new Order(
+                UUID.randomUUID(),
+                libItemId,
+                readerId,
+                initiatorId,
+                takenFromDate,
+                takenToDate,
+                type,
+                OrderState.OPEN
+        );
+    }
 
     public void markAccepted() {
         if (state == OrderState.OPEN) {
