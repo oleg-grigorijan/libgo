@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @Getter
 @Setter
 @EqualsAndHashCode

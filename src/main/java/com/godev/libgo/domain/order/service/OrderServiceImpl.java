@@ -18,6 +18,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import static com.godev.libgo.domain.order.model.OrderState.ACCEPTED;
+import static com.godev.libgo.domain.order.model.OrderState.DELIVERED;
+
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
@@ -36,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
         auth.requireAuthority(Authority.VIEW_ANY_ORDER);
 
         return tx.transactionalGet(() -> {
-            List<Order> orders = repository.findAllByLibItemIdAndState(libItemId, OrderState.DELIVERED);
+            List<Order> orders = repository.findAllByLibItemIdAndState(libItemId, DELIVERED);
             return switch (orders.size()) {
                 case 0 -> throw OrderException.libItemIsNotDelivered(libItemId);
                 case 1 -> orders.get(0);
@@ -99,6 +102,12 @@ public class OrderServiceImpl implements OrderService {
 
         tx.transactional(() -> {
             Order order = getById(orderId);
+            repository.findByLibItemIdAndTakenPeriodIntersectsWith(order.getLibItemId(), order.getTakenPeriod()).stream()
+                    .filter(o -> o.getState() == ACCEPTED || o.getState() == DELIVERED)
+                    .findAny()
+                    .ifPresent(conflictOrder -> {
+                        throw OrderException.takenPeriodConflict(order.getTakenPeriod(), conflictOrder.getTakenPeriod());
+                    });
             order.markAccepted();
 
             repository.update(order);

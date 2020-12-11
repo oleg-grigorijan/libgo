@@ -128,4 +128,21 @@ public class OrderRepositoryImpl extends BaseJdbcRepository<Order> implements Or
             }
         });
     }
+
+    @Override
+    public List<Order> findByLibItemIdAndTakenPeriodIntersectsWith(UUID libItemId, DateRange takenPeriod) {
+        return pool.withConnectionGet(connection -> {
+            String sql = "select * from " + TABLE
+                    + " where " + LIB_ITEM_ID + " = ?"
+                    + "   and " + TAKEN_FROM_DATE + " <= ?"
+                    + "   and " + TAKEN_TO_DATE + " >= ?";
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setBytes(1, toBytes(libItemId));
+                stmt.setDate(2, Date.valueOf(takenPeriod.getTo()));
+                stmt.setDate(3, Date.valueOf(takenPeriod.getFrom()));
+                ResultSet result = stmt.executeQuery();
+                return mapAll(result);
+            }
+        });
+    }
 }

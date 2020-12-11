@@ -35,6 +35,7 @@ public interface MessageKeys {
             String BASE = Order.BASE + ".error";
             String INVALID_STATE_CHANGE = BASE + ".state.invalidChange";
             String LIB_ITEM_IS_NOT_DELIVERED = BASE + ".libItem.notDelivered";
+            String TAKEN_PERIOD_CONFLICT = BASE + ".takenPeriod.conflict";
         }
     }
 }

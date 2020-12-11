@@ -1,5 +1,6 @@
 package com.godev.libgo.domain.order.persistence;
 
+import com.godev.libgo.domain.commons.model.DateRange;
 import com.godev.libgo.domain.commons.persistence.Repository;
 import com.godev.libgo.domain.order.model.Order;
 import com.godev.libgo.domain.order.model.OrderState;
@@ -16,4 +17,6 @@ public interface OrderRepository extends Repository<Order> {
     List<Order> findAllByLibItemIdAndState(@NonNull UUID libItemId, @NonNull OrderState state);
 
     List<Order> findAllByTakenFromDateIsOrTakenToDateIsOrStateIs(LocalDate date, OrderState state);
+
+    List<Order> findByLibItemIdAndTakenPeriodIntersectsWith(UUID libItemId, DateRange takenPeriod);
 }

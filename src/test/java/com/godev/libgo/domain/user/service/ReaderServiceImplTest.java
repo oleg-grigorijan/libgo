@@ -67,7 +67,7 @@ class ReaderServiceImplTest {
     }
 
     @Test
-    void readerShouldNotBeCreatedIfExistsById() {
+    void readerShouldNotBeCreatedIfExistsByEmail() {
         var request = ReaderRegistrationRequest.of(FULL_NAME, EMAIL, IDENTITY_DOCUMENT);
 
         when(repository.existsByEmail(EMAIL)).thenReturn(true);
