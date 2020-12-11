@@ -2,6 +2,14 @@ package com.godev.libgo;
 
 public interface MessageKeys {
 
+    interface Commons {
+        interface Error {
+            String BADLY_FORMATTED_EMAIL = "email.badlyFormatted";
+            String UNKNOWN_LANGUAGE = "language.unknown";
+            String START_DATE_IS_AFTER_END_DATE = "dateRange.invalid";
+        }
+    }
+
     interface Security {
         String BASE = "security";
 

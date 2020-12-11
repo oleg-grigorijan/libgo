@@ -1,5 +1,6 @@
 package com.godev.libgo.domain.order.persistence;
 
+import com.godev.libgo.domain.commons.model.DateRange;
 import com.godev.libgo.domain.commons.persistence.BaseJdbcRepository;
 import com.godev.libgo.domain.order.model.Order;
 import com.godev.libgo.domain.order.model.OrderState;
@@ -42,8 +43,10 @@ public class OrderRepositoryImpl extends BaseJdbcRepository<Order> implements Or
                 toUuid(result.getBytes(LIB_ITEM_ID)),
                 toUuid(result.getBytes(READER_ID)),
                 toUuid(result.getBytes(INITIATOR_ID)),
-                result.getDate(TAKEN_FROM_DATE).toLocalDate(),
-                result.getDate(TAKEN_TO_DATE).toLocalDate(),
+                DateRange.of(
+                        result.getDate(TAKEN_FROM_DATE).toLocalDate(),
+                        result.getDate(TAKEN_TO_DATE).toLocalDate()
+                ),
                 OrderType.valueOf(result.getString(TYPE)),
                 OrderState.valueOf(result.getString(STATE))
         );
@@ -60,8 +63,8 @@ public class OrderRepositoryImpl extends BaseJdbcRepository<Order> implements Or
                 stmt.setBytes(2, toBytes(order.getLibItemId()));
                 stmt.setBytes(3, toBytes(order.getReaderId()));
                 stmt.setBytes(4, toBytes(order.getInitiatorId()));
-                stmt.setDate(5, Date.valueOf(order.getTakenFromDate()));
-                stmt.setDate(6, Date.valueOf(order.getTakenToDate()));
+                stmt.setDate(5, Date.valueOf(order.getTakenPeriod().getFrom()));
+                stmt.setDate(6, Date.valueOf(order.getTakenPeriod().getTo()));
                 stmt.setString(7, order.getType().name());
                 stmt.setString(8, order.getState().name());
                 stmt.executeUpdate();

@@ -84,8 +84,7 @@ public class OrderServiceImpl implements OrderService {
                     request.getLibItemId(),
                     readerId,
                     initiatorId,
-                    request.getTakenFromDate(),
-                    request.getTakenToDate(),
+                    request.getTakenPeriod(),
                     request.getType()
             );
             repository.create(order);

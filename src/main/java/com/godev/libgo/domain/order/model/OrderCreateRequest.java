@@ -1,5 +1,6 @@
 package com.godev.libgo.domain.order.model;
 
+import com.godev.libgo.domain.commons.model.DateRange;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,7 +9,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -21,6 +21,5 @@ public class OrderCreateRequest implements Serializable {
 
     private UUID libItemId;
     private OrderType type;
-    private LocalDate takenFromDate;
-    private LocalDate takenToDate;
+    private DateRange takenPeriod;
 }

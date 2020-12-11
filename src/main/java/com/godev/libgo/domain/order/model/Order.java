@@ -1,5 +1,6 @@
 package com.godev.libgo.domain.order.model;
 
+import com.godev.libgo.domain.commons.model.DateRange;
 import com.godev.libgo.domain.commons.model.DomainEntity;
 import com.godev.libgo.domain.order.OrderException;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -20,19 +20,17 @@ public class Order implements DomainEntity {
     private final UUID libItemId;
     private final UUID readerId;
     private final UUID initiatorId;
-    private final LocalDate takenFromDate;
-    private final LocalDate takenToDate;
+    private final DateRange takenPeriod;
     private final OrderType type;
     private OrderState state;
 
-    public static Order forCreation(UUID libItemId, UUID readerId, UUID initiatorId, LocalDate takenFromDate, LocalDate takenToDate, OrderType type) {
+    public static Order forCreation(UUID libItemId, UUID readerId, UUID initiatorId, DateRange takenPeriod, OrderType type) {
         return new Order(
                 UUID.randomUUID(),
                 libItemId,
                 readerId,
                 initiatorId,
-                takenFromDate,
-                takenToDate,
+                takenPeriod,
                 type,
                 OrderState.OPEN
         );

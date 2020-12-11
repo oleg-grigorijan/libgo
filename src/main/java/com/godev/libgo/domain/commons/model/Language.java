@@ -9,6 +9,7 @@ import lombok.ToString;
 import java.util.Locale;
 import java.util.Set;
 
+import static com.godev.libgo.MessageKeys.Commons.Error.UNKNOWN_LANGUAGE;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
@@ -24,7 +25,9 @@ public class Language implements DomainValue {
     @NonNull private final String code;
 
     public static Language of(@NonNull String code) {
-        if (!codes.contains(code)) throw new RuntimeException();
+        if (!codes.contains(code)) {
+            throw new IllegalArgumentException(UNKNOWN_LANGUAGE);
+        }
         return new Language(code);
     }
 }
