@@ -2,9 +2,9 @@ package com.godev.libgo.domain.user.persistence;
 
 import com.godev.libgo.domain.commons.model.Email;
 import com.godev.libgo.domain.commons.persistence.BaseJdbcRepository;
-import com.godev.libgo.domain.commons.persistence.JdbcConnectionPool;
 import com.godev.libgo.domain.user.model.Employee;
 import com.godev.libgo.domain.user.model.UserRole;
+import com.godev.libgo.infra.persistence.JdbcConnectionPool;
 import lombok.NonNull;
 
 import java.sql.PreparedStatement;

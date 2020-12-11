@@ -2,11 +2,15 @@ package com.godev.libgo.domain.commons.exception;
 
 public class UnexpectedStateException extends ApplicationException {
 
-    public UnexpectedStateException(String message) {
-        super(message);
+    private UnexpectedStateException(String humanReadableMessage) {
+        super(humanReadableMessage);
     }
 
-    private UnexpectedStateException(String message, Throwable cause) {
-        super(message, cause);
+    public static UnexpectedStateException because(String humanReadableMessage) {
+        return new UnexpectedStateException(humanReadableMessage);
+    }
+
+    public static UnexpectedStateException notImplemented() {
+        return UnexpectedStateException.because("Not implemented");
     }
 }

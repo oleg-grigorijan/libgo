@@ -2,15 +2,15 @@ package com.godev.libgo.domain.user.service;
 
 import com.godev.libgo.domain.commons.exception.EntityNotFoundException;
 import com.godev.libgo.domain.commons.model.Email;
-import com.godev.libgo.domain.commons.persistence.TxTemplate;
-import com.godev.libgo.domain.commons.security.Auth;
 import com.godev.libgo.domain.commons.security.Authority;
-import com.godev.libgo.domain.commons.security.SecurityContext;
 import com.godev.libgo.domain.user.UserException;
 import com.godev.libgo.domain.user.model.Employee;
 import com.godev.libgo.domain.user.model.EmployeeRegistrationRequest;
 import com.godev.libgo.domain.user.model.UserRole;
 import com.godev.libgo.domain.user.persistence.EmployeeRepository;
+import com.godev.libgo.infra.persistence.TxTemplate;
+import com.godev.libgo.infra.security.Auth;
+import com.godev.libgo.infra.security.SecurityContext;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 

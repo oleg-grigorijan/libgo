@@ -10,7 +10,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
 @Getter
 @Setter

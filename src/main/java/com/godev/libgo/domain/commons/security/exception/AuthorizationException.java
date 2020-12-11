@@ -1,9 +1,8 @@
 package com.godev.libgo.domain.commons.security.exception;
 
-import com.godev.libgo.domain.commons.security.Authority;
-import org.jetbrains.annotations.Nullable;
+import com.godev.libgo.infra.security.BaseAuthority;
 
-import java.util.UUID;
+import static com.godev.libgo.MessageKeys.Security.Error.NO_AUTHORITY;
 
 public class AuthorizationException extends SecurityException {
 
@@ -15,11 +14,7 @@ public class AuthorizationException extends SecurityException {
         super(message, cause);
     }
 
-    public static AuthorizationException noAuthority(Authority authority) {
-        return new AuthorizationException("");
-    }
-
-    public static AuthorizationException userAuthRequired(UUID requiredUserId, @Nullable UUID actualUserId) {
-        return new AuthorizationException("");
+    public static AuthorizationException noAuthority(BaseAuthority authority) {
+        return new AuthorizationException(NO_AUTHORITY);
     }
 }

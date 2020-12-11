@@ -1,4 +1,4 @@
-package com.godev.libgo.domain.commons.security;
+package com.godev.libgo.infra.security;
 
 public interface SecurityContext {
 

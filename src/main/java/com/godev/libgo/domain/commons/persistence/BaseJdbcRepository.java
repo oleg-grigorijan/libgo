@@ -1,6 +1,7 @@
 package com.godev.libgo.domain.commons.persistence;
 
 import com.godev.libgo.domain.commons.model.DomainEntity;
+import com.godev.libgo.infra.persistence.JdbcConnectionPool;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 

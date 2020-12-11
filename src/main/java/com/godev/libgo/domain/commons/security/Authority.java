@@ -1,6 +1,8 @@
 package com.godev.libgo.domain.commons.security;
 
-public enum Authority {
+import com.godev.libgo.infra.security.BaseAuthority;
+
+public enum Authority implements BaseAuthority {
 
     VIEW_ANY_READER,
     CREATE_EMPLOYEE_USER,

@@ -1,4 +1,4 @@
-package com.godev.libgo.domain.commons.persistence;
+package com.godev.libgo.infra.persistence;
 
 import java.sql.Connection;
 

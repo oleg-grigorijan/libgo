@@ -1,7 +1,7 @@
-package com.godev.libgo.domain.commons.persistence;
+package com.godev.libgo.infra.persistence;
 
+import com.godev.libgo.domain.commons.persistence.PersistenceException;
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.function.Supplier;
 
-@Slf4j
 public class ThreadLocalJdbcConnectionPool implements JdbcConnectionPool, TxTemplate {
 
     private final BlockingQueue<Connection> connections;
@@ -64,7 +63,7 @@ public class ThreadLocalJdbcConnectionPool implements JdbcConnectionPool, TxTemp
             try {
                 connection.rollback();
             } catch (Exception e1) {
-                log.error("Can't rollback persistence transaction", e1);
+                e.addSuppressed(e1);
             }
             throw PersistenceException.unexpected(e);
 

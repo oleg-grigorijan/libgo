@@ -1,10 +1,16 @@
 package com.godev.libgo.domain.user.model;
 
-public enum UserRole {
+import com.godev.libgo.infra.security.BaseUserRole;
+
+public enum UserRole implements BaseUserRole {
 
     GUEST,
     LIBRARIAN,
     HR,
     READER,
-    SUPER,
+    SUPER;
+
+    public boolean isSuper() {
+        return this == SUPER;
+    }
 }

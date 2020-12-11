@@ -4,12 +4,11 @@ import com.godev.libgo.domain.order.model.Order;
 import com.godev.libgo.domain.order.model.OrderCreateRequest;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface OrderService {
 
-    Optional<Order> findByLibItem(UUID libItemId);
+    Order getDeliveredByLibItem(UUID libItemId);
 
     List<Order> getAllActualForToday();
 

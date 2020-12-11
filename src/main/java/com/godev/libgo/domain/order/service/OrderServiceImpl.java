@@ -1,20 +1,21 @@
 package com.godev.libgo.domain.order.service;
 
-import com.godev.libgo.domain.commons.exception.NotImplementedException;
-import com.godev.libgo.domain.commons.persistence.TxTemplate;
-import com.godev.libgo.domain.commons.security.Auth;
+import com.godev.libgo.domain.commons.exception.UnexpectedStateException;
 import com.godev.libgo.domain.commons.security.Authority;
-import com.godev.libgo.domain.commons.security.SecurityContext;
+import com.godev.libgo.domain.order.OrderException;
 import com.godev.libgo.domain.order.model.Order;
 import com.godev.libgo.domain.order.model.OrderCreateRequest;
+import com.godev.libgo.domain.order.model.OrderState;
 import com.godev.libgo.domain.order.persistence.OrderRepository;
+import com.godev.libgo.infra.persistence.TxTemplate;
+import com.godev.libgo.infra.security.Auth;
+import com.godev.libgo.infra.security.SecurityContext;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -30,12 +31,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> findByLibItem(UUID libItemId) {
+    public Order getDeliveredByLibItem(UUID libItemId) {
         Auth auth = security.getCurrentAuth();
         auth.requireAuthority(Authority.VIEW_ANY_ORDER);
 
-
-        throw new NotImplementedException();
+        return tx.transactionalGet(() -> {
+            List<Order> orders = repository.findAllByLibItemIdAndState(libItemId, OrderState.DELIVERED);
+            return switch (orders.size()) {
+                case 0 -> throw OrderException.libItemIsNotDelivered(libItemId);
+                case 1 -> orders.get(0);
+                default -> throw UnexpectedStateException.because("More than one delivered order with library item " + libItemId);
+            };
+        });
     }
 
     @Override
@@ -44,8 +51,7 @@ public class OrderServiceImpl implements OrderService {
         auth.requireAuthority(Authority.VIEW_ANY_ORDER);
 
         LocalDate today = LocalDate.now(clock);
-
-        throw new NotImplementedException();
+        return tx.transactionalGet(() -> repository.findAllByTakenFromDateIsOrTakenToDateIsOrStateIs(today, OrderState.OPEN));
     }
 
     @Override

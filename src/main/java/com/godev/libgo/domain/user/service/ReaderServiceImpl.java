@@ -2,14 +2,14 @@ package com.godev.libgo.domain.user.service;
 
 import com.godev.libgo.domain.commons.exception.EntityNotFoundException;
 import com.godev.libgo.domain.commons.model.Email;
-import com.godev.libgo.domain.commons.persistence.TxTemplate;
-import com.godev.libgo.domain.commons.security.Auth;
 import com.godev.libgo.domain.commons.security.Authority;
-import com.godev.libgo.domain.commons.security.SecurityContext;
 import com.godev.libgo.domain.user.UserException;
 import com.godev.libgo.domain.user.model.Reader;
 import com.godev.libgo.domain.user.model.ReaderRegistrationRequest;
 import com.godev.libgo.domain.user.persistence.ReaderRepository;
+import com.godev.libgo.infra.persistence.TxTemplate;
+import com.godev.libgo.infra.security.Auth;
+import com.godev.libgo.infra.security.SecurityContext;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +35,7 @@ public class ReaderServiceImpl implements ReaderService {
                     .orElseThrow(() -> EntityNotFoundException.byIdentity(email.getAddress()));
 
             Auth auth = security.getCurrentAuth();
-            if (!auth.verifyUserId(reader.getId())) {
+            if (!auth.hasUserId(reader.getId())) {
                 auth.requireAuthority(Authority.VIEW_ANY_READER);
             }
 
